@@ -3,6 +3,7 @@ import Wrapper from "./Components/Wrapper/Wrapper";
 import Game from "./Components/Game/Game";
 import { useMenuStore } from "./store/menuStore";
 import Menu from "./Components/Menu/Menu";
+import { OrbitControls } from "@react-three/drei";
 
 function App() {
   const { isVisible } = useMenuStore();
@@ -24,6 +25,7 @@ function App() {
             zoom: 20,
           }}
         >
+          <OrbitControls />
           <Game />
         </Canvas>
         {isVisible && <Menu />}
