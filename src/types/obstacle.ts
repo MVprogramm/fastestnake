@@ -40,3 +40,10 @@ export type MushroomProps = {
   rotation?: [number, number, number];
   scale?: [number, number, number];
 };
+
+export interface TreeProps {
+  position: [number, number, number]; // Позиция дерева в 3D-пространстве (x, y, z).
+  rotation?: [number, number, number]; // Вращение дерева вокруг осей (x, y, z) в радианах. Опциональный пропс.
+  scale?: [number, number, number]; // Масштабирование дерева по осям (x, y, z). Опциональный пропс.
+  color?: number; // Цвет дерева в виде шестнадцатеричного значения (например, 0xa2d109). Опциональный пропс.
+}

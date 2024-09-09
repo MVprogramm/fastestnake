@@ -1,4 +1,4 @@
-import { useThree, useFrame } from "@react-three/fiber";
+// import { useThree, useFrame } from "@react-three/fiber";
 import { getField } from "../../engine/field/fieldPerLevel";
 import Fields from "../Field/Field";
 import { getObstacles } from "../../engine/obstacles/obstaclesPerLevel";
@@ -10,40 +10,40 @@ import Food from "../Food/Food";
 import { useRef } from "react";
 import { Vector3 } from "three";
 import { getFoodCoord } from "../../engine/food/food";
-import { getStep } from "../../engine/time/timerStepPerLevel";
+// import { getStep } from "../../engine/time/timerStepPerLevel";
 
 const previousTargetPosition: Vector3 = new Vector3(0, 0, 5);
 
 function GamePlay() {
-  const { camera } = useThree();
+  // const { camera } = useThree();
   const gridSize = getField();
   const headPosition = useRef(new Vector3(0, 0, 0));
   const targetPosition = useRef(new Vector3(0, 0, 5)); // Уменьшили значение Z до 5
   const lightPoint = getFoodCoord();
-  let ratioX = 43;
-  let ratioY = 37;
-  if (
-    Math.min(window.innerHeight, window.innerWidth) < 1000 &&
-    Math.max(window.innerHeight, window.innerWidth) > 1000
-  )
-    ratioX = 35;
-  if (Math.max(window.innerHeight, window.innerWidth) < 1000) {
-    ratioX = 41;
-    ratioY = 43;
-  }
-  useFrame(() => {
-    targetPosition.current.lerp(headPosition.current, 0.01 * getStep());
-    camera.position.set(
-      Math.abs(Math.round(targetPosition.current.x)) <= ratioX
-        ? targetPosition.current.x
-        : camera.position.x,
-      Math.abs(Math.round(targetPosition.current.y)) <= ratioY
-        ? targetPosition.current.y
-        : camera.position.y,
-      3.5
-    );
-    camera.updateProjectionMatrix();
-  });
+  // let ratioX = 43;
+  // let ratioY = 37;
+  // if (
+  //   Math.min(window.innerHeight, window.innerWidth) < 1000 &&
+  //   Math.max(window.innerHeight, window.innerWidth) > 1000
+  // )
+  //   ratioX = 35;
+  // if (Math.max(window.innerHeight, window.innerWidth) < 1000) {
+  //   ratioX = 41;
+  //   ratioY = 43;
+  // }
+  // useFrame(() => {
+  //   targetPosition.current.lerp(headPosition.current, 0.01 * getStep());
+  //   camera.position.set(
+  //     Math.abs(Math.round(targetPosition.current.x)) <= ratioX
+  //       ? targetPosition.current.x
+  //       : camera.position.x,
+  //     Math.abs(Math.round(targetPosition.current.y)) <= ratioY
+  //       ? targetPosition.current.y
+  //       : camera.position.y,
+  //     3.5
+  //   );
+  //   camera.updateProjectionMatrix();
+  // });
   previousTargetPosition.x = targetPosition.current.x;
   previousTargetPosition.y = targetPosition.current.y;
 
