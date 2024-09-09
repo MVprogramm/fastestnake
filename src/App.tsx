@@ -12,17 +12,12 @@ function App() {
     <>
       <Wrapper>
         <Canvas
-          orthographic
           camera={{
-            left: -100,
-            right: 100,
-            top: 100,
-            bottom: -100,
-            far: 100,
-            near: -100,
-            rotation: [0.7, 0, 0],
-            position: [0, 0, 1],
-            zoom: 20,
+            fov: 50, // Угол обзора
+            aspect: window.innerWidth / window.innerHeight, // Соотношение сторон
+            near: 0.1, // Ближайшая точка обзора
+            far: 1000, // Самая дальняя точка обзора
+            position: [0, -12, 20], // Положение камеры
           }}
         >
           <OrbitControls />

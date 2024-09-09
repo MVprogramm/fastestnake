@@ -1,9 +1,9 @@
-import * as THREE from "three";
 import { useEffect, useRef } from "react";
 import { useThree } from "@react-three/fiber";
+import * as THREE from "three";
+import gsap from "gsap"; // Импорт GSAP для анимации
+import Tree from "../../assets/tree/Tree";
 import { FieldsProps } from "../../types/field";
-import Tree from "../../assets/tree/tree";
-import Entity from "../Entity/Entity";
 
 const Fields: React.FC<FieldsProps> = ({ size }) => {
   const { scene } = useThree();
@@ -21,61 +21,67 @@ const Fields: React.FC<FieldsProps> = ({ size }) => {
     );
 
     // Устанавливаем позицию сетки
-    gridHelper.position.set(
-      0, // Позиция по оси X (центрирование)
-      0, // Позиция по оси Y (вместе с полем)
-      0 // Позиция по оси Z (центрирование)
-    );
+    gridHelper.position.set(0, 0, 0);
 
-    // Поворачиваем сетку, чтобы она лежала в плоскости XZ
+    // Поворот сетки в плоскость XZ
     gridHelper.rotation.x = Math.PI / 2;
 
     gridHelper.material.transparent = true;
     gridHelper.material.opacity = 0.3;
 
-    // Создание и настройка фона (тумана)
-    scene.background = new THREE.Color(0x87ceeb); // Цвет фона
-    scene.fog = new THREE.Fog(0x87ceeb, 10, 100); // Цвет тумана, близость и дальность видимости
+    // Установка тумана
+    scene.fog = new THREE.Fog(0x39c09f, 10, 100); // Изначальные параметры тумана
+
+    // Цвет фона
+    scene.background = new THREE.Color(0x39c09f); // Задание цвета фона
+
+    // Анимация тумана
+    gsap.to(scene.fog, {
+      duration: 5, // Длительность анимации (5 секунд)
+      near: 25, // Параметр near станет 5 (туман начнётся ближе к камере)
+      far: 50, // Параметр far станет 50 (объекты на расстоянии 50 будут полностью затуманены)
+      ease: "power2.inOut", // Плавность анимации
+    });
 
     // Добавление сетки в сцену
     scene.add(gridHelper);
     gridRef.current = gridHelper;
 
-    // Создание и добавление кубов за пределами поля
-    const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-    const cubeMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-
-    const createCube = (position: THREE.Vector3) => {
-      const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-      cube.position.copy(position);
-      scene.add(cube);
-    };
-
-    // Размещение кубов за пределами поля
-    createCube(new THREE.Vector3(-size / 2 - 1, 0.5, 0)); // Куб слева и сзади
-    createCube(new THREE.Vector3(size / 2 + 1, 0.5, 0)); // Куб справа и сзади
-    createCube(new THREE.Vector3(-size / 2 - 2, 5.5, 0)); // Куб слева и спереди
-    createCube(new THREE.Vector3(size / 2 + 1, 10.5, 0)); // Куб справа и спереди
-
     return () => {
       scene.remove(gridHelper);
-      scene.remove(
-        ...scene.children.filter(
-          (child) =>
-            child instanceof THREE.Mesh &&
-            child.geometry instanceof THREE.BoxGeometry
-        )
-      );
     };
   }, [scene, size]);
 
   return (
-    <group>
-      <mesh position={[0, 0, 0]} receiveShadow>
-        <planeGeometry args={[size, size]} />
-        <meshStandardMaterial color="green" />
-      </mesh>
-    </group>
+    <>
+      <group>
+        <mesh position={[0, 0, 0]} receiveShadow>
+          <planeGeometry args={[size * 50, size * 50]} />
+          <meshStandardMaterial color="#56F854" />
+        </mesh>
+        {/* Размещение деревьев */}
+        <Tree
+          position={[-size / -3 - 1, 15.5, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[1, 1, 1]}
+        />
+        <Tree
+          position={[size / 2 + 1, 0.5, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[1, 1, 1]}
+        />
+        <Tree
+          position={[-size / 2 - 2, 15.5, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[1, 1, 1]}
+        />
+        <Tree
+          position={[size / 2 + 1, -5.5, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={[1, 1, 1]}
+        />
+      </group>
+    </>
   );
 };
 
