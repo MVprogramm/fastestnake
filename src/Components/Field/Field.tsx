@@ -21,7 +21,7 @@ const Fields: React.FC<FieldsProps> = ({ size }) => {
     );
 
     // Устанавливаем позицию сетки
-    gridHelper.position.set(0, 0, 0);
+    gridHelper.position.set(0, 0, 0.1);
 
     // Поворот сетки в плоскость XZ
     gridHelper.rotation.x = Math.PI / 2;

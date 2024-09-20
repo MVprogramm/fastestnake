@@ -1,4 +1,4 @@
-// import { useThree, useFrame } from "@react-three/fiber";
+import { useThree, useFrame } from "@react-three/fiber";
 import { getField } from "../../engine/field/fieldPerLevel";
 import Fields from "../Field/Field";
 import { getObstacles } from "../../engine/obstacles/obstaclesPerLevel";
@@ -10,18 +10,22 @@ import Food from "../Food/Food";
 import { useRef } from "react";
 import { Vector3 } from "three";
 import { getFoodCoord } from "../../engine/food/food";
-// import { getStep } from "../../engine/time/timerStepPerLevel";
+import { getStep } from "../../engine/time/timerStepPerLevel";
+import { useCamera } from "../Camera/CameraContext";
 
 const previousTargetPosition: Vector3 = new Vector3(0, 0, 5);
 
 function GamePlay() {
   // const { camera } = useThree();
+  const camera = useCamera();
   const gridSize = getField();
   const headPosition = useRef(new Vector3(0, 0, 0));
   const targetPosition = useRef(new Vector3(0, 0, 5)); // Уменьшили значение Z до 5
   const lightPoint = getFoodCoord();
+  console.log(camera);
+
   // let ratioX = 43;
-  // let ratioY = 37;
+  // let ratioY = 37
   // if (
   //   Math.min(window.innerHeight, window.innerWidth) < 1000 &&
   //   Math.max(window.innerHeight, window.innerWidth) > 1000
@@ -40,7 +44,7 @@ function GamePlay() {
   //     Math.abs(Math.round(targetPosition.current.y)) <= ratioY
   //       ? targetPosition.current.y
   //       : camera.position.y,
-  //     3.5
+  //     20
   //   );
   //   camera.updateProjectionMatrix();
   // });
