@@ -21,7 +21,7 @@ const Fields: React.FC<FieldsProps> = ({ size }) => {
     );
 
     // Устанавливаем позицию сетки
-    gridHelper.position.set(0, 0, 0);
+    gridHelper.position.set(0, 0, 0.1);
 
     // Поворот сетки в плоскость XZ
     gridHelper.rotation.x = Math.PI / 2;
@@ -38,7 +38,7 @@ const Fields: React.FC<FieldsProps> = ({ size }) => {
     // Анимация тумана
     gsap.to(scene.fog, {
       duration: 5, // Длительность анимации (5 секунд)
-      near: 25, // Параметр near станет 5 (туман начнётся ближе к камере)
+      near: 40, // Параметр near станет 5 (туман начнётся ближе к камере)
       far: 50, // Параметр far станет 50 (объекты на расстоянии 50 будут полностью затуманены)
       ease: "power2.inOut", // Плавность анимации
     });

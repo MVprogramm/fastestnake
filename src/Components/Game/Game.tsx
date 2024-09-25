@@ -17,20 +17,9 @@ import {
 } from "../../engine/events/pauseEvent";
 
 function Game() {
-  // const { isPause, togglePause } = usePauseStore();
   const { titleMenu } = useMenuStore.getState();
   const { isVisible } = useMenuStore();
-  // const spaceDown = (e: KeyboardEvent) => {
-  //   if (e.code === "Space") {
-  //     console.log()
-  //     toggleModal();
-  //     selectTitleMenu("Pause");
-  //     togglePause();
-  //     swapPause();
-  //     // isPause ? startTimer() : stopTimer();
-  //     stopTimer();
-  //   }
-  // };
+
   if (isVisible) {
     document.removeEventListener("keydown", keyboardEvents);
     if (titleMenu === "Pause")
