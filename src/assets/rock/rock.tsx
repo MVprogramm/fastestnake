@@ -3,11 +3,6 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { TreeProps } from "../../types/obstacle";
 
-// import { useRef, useMemo } from "react";
-// import { useFrame } from "@react-three/fiber";
-// import * as THREE from "three";
-// import { TreeProps } from "../../types/obstacle"; // Вы можете создать отдельный тип для Rocks, если он будет отличаться
-
 const Rocks = (props: TreeProps) => {
   const {
     position,
@@ -53,3 +48,4 @@ const Rocks = (props: TreeProps) => {
 };
 
 export default Rocks;
+

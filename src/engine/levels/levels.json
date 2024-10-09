@@ -5,7 +5,7 @@
     "timerStep": "1",
     "food": "25",
     "lives": "3",
-    "obstacles": ["y", "y", "y", "x", "x"],
+    "obstacles": ["x", "y", "x", "y", "x", "y", "fix", "fix"],
     "bonuses": [
       {
         "type": "doubleScoresFood",
