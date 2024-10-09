@@ -1,4 +1,4 @@
-import { useThree, useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { getField } from "../../engine/field/fieldPerLevel";
 import Fields from "../Field/Field";
 import { getObstacles } from "../../engine/obstacles/obstaclesPerLevel";
@@ -11,45 +11,48 @@ import { useRef } from "react";
 import { Vector3 } from "three";
 import { getFoodCoord } from "../../engine/food/food";
 import { getStep } from "../../engine/time/timerStepPerLevel";
-// import { useCamera } from "../Camera/CameraContext";
-
-const previousTargetPosition: Vector3 = new Vector3(0, 0, 5);
+import getSnakeMoveDirection from "../../engine/snake/getSnakeMoveDirection";
+import checkTimerStep from "../../engine/time/checkTimerStep";
+import { checkContact } from "../../engine/events/isContact";
+import { checkTimerWorking } from "../../engine/time/isTimer";
 
 function GamePlay() {
   const { camera } = useThree();
-
   const gridSize = getField();
   const headPosition = useRef(new Vector3(0, 0, 0));
-  const targetPosition = useRef(new Vector3(0, 0, 8)); // Уменьшили значение Z до 5
+  const targetPosition = useRef(new Vector3(0, 0, 0));
+  const gapStart = useRef(new Vector3(0, 0, 0));
+  const gapEnd = useRef(new Vector3(0, 0, 0));
   const lightPoint = getFoodCoord();
-  let ratioX = 43;
-  let ratioY = 37;
-  if (
-    Math.min(window.innerHeight, window.innerWidth) < 1000 &&
-    Math.max(window.innerHeight, window.innerWidth) > 1000
-  )
-    ratioX = 35;
-  if (Math.max(window.innerHeight, window.innerWidth) < 1000) {
-    ratioX = 41;
-    ratioY = 43;
-  }
+  const gaps = [55, 52, 42, 41, 40];
+  const standUp =
+    checkTimerStep() || checkContact() || !checkTimerWorking()
+      ? 0
+      : gaps[getStep() - 1];
+  const xOffset =
+    getSnakeMoveDirection()[0] === "Y"
+      ? 0
+      : getSnakeMoveDirection()[1] === "left"
+      ? -standUp
+      : standUp;
+  const yOffset =
+    getSnakeMoveDirection()[0] === "X"
+      ? 0
+      : getSnakeMoveDirection()[1] === "up"
+      ? -standUp
+      : standUp;
+  gapEnd.current.x = xOffset;
+  gapEnd.current.y = yOffset;
   useFrame(() => {
-    targetPosition.current.lerp(headPosition.current, 0.01 * getStep());
+    targetPosition.current.lerp(headPosition.current, 0.001 * getStep());
+    gapStart.current.lerp(gapEnd.current, 0.001 * getStep());
     camera.position.set(
-      Math.abs(Math.round(targetPosition.current.x)) <= ratioX
-        ? targetPosition.current.x
-        : camera.position.x,
-      (Math.abs(Math.round(targetPosition.current.y)) <= ratioY + 15
-        ? targetPosition.current.y
-        : camera.position.y) - 25,
+      targetPosition.current.x + gapStart.current.x,
+      targetPosition.current.y - 25 - gapStart.current.y,
       25
     );
     camera.updateProjectionMatrix();
   });
-
-  previousTargetPosition.x = targetPosition.current.x;
-  previousTargetPosition.y = targetPosition.current.y;
-
   return (
     <mesh>
       <ambientLight intensity={0.1} />

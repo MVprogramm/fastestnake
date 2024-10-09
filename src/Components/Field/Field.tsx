@@ -4,6 +4,7 @@ import * as THREE from "three";
 import gsap from "gsap"; // Импорт GSAP для анимации
 import Tree from "../../assets/tree/Tree";
 import { FieldsProps } from "../../types/field";
+import Rocks from "../../assets/rock/rock";
 
 const Fields: React.FC<FieldsProps> = ({ size }) => {
   const { scene } = useThree();
@@ -65,7 +66,7 @@ const Fields: React.FC<FieldsProps> = ({ size }) => {
           rotation={[Math.PI / 2, 0, 0]}
           scale={[1, 1, 1]}
         />
-        <Tree
+        <Rocks
           position={[size / 2 + 1, 0.5, 0]}
           rotation={[Math.PI / 2, 0, 0]}
           scale={[1, 1, 1]}

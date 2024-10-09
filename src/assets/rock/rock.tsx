@@ -3,19 +3,19 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { TreeProps } from "../../types/obstacle";
 
-const Tree = (props: TreeProps) => {
+const Rocks = (props: TreeProps) => {
   const {
     position,
     rotation = [0, 0, 0],
     scale = [1, 1, 1],
-    color = 0xa2d109,
+    color = 0x808080, // Серый цвет для камней
   } = props;
   const groupRef = useRef<THREE.Group>(null);
 
   // Используем useMemo для кэширования геометрии и материала
   const geometry = useMemo(() => {
-    const geom = new THREE.IcosahedronGeometry(0.3);
-    geom.scale(1, 6, 1);
+    const geom = new THREE.IcosahedronGeometry(0.4); // Увеличим геометрию для камней
+    geom.scale(1.2, 1, 1.2); // Добавим немного искажения, чтобы камни выглядели более естественными
     return geom;
   }, []);
 
@@ -40,11 +40,12 @@ const Tree = (props: TreeProps) => {
       <mesh
         geometry={geometry}
         material={material}
-        scale={1} // Установите фиксированный масштаб
-        rotation-y={0} // Установите фиксированное вращение
+        scale={1} // Установим фиксированный масштаб
+        rotation-y={0} // Установим фиксированное вращение
       />
     </group>
   );
 };
 
-export default Tree;
+export default Rocks;
+

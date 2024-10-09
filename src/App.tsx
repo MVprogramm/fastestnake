@@ -7,18 +7,18 @@ import Menu from "./Components/Menu/Menu";
 
 function App() {
   const { isVisible } = useMenuStore();
-  const cameraSettings = {
-    fov: 30,
-    aspect: window.innerWidth / window.innerHeight,
-    near: 0.1,
-    far: 1000,
-    position: [0, -20, 20] as [number, number, number],
-  };
-
   return (
     <>
       <Wrapper>
-        <Canvas camera={cameraSettings}>
+        <Canvas
+          camera={{
+            fov: 30,
+            aspect: window.innerWidth / window.innerHeight,
+            far: 1000,
+            near: 0.1,
+            rotation: [0.8, 0, 0],
+          }}
+        >
           <Game />
         </Canvas>
         {isVisible && <Menu />}
