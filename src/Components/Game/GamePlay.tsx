@@ -18,6 +18,7 @@ import { checkTimerWorking } from "../../engine/time/isTimer";
 
 function GamePlay() {
   const { camera } = useThree();
+
   const gridSize = getField();
   const headPosition = useRef(new Vector3(0, 0, 0));
   const targetPosition = useRef(new Vector3(0, 0, 0));

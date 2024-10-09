@@ -12,6 +12,7 @@ import Hedgehog from "../../assets/hedgehogModel/Hedgehog";
 import { positionAnimationProps } from "../../types/three";
 import { easeLinear } from "d3-ease";
 import Mushroom from "../../assets/mushroomModel/Mushroom";
+// import Tree from "../../assets/tree/Tree";
 
 export const ObstaclesFix: React.FC = () => {
   const gridSize = getField();
@@ -33,7 +34,7 @@ export const ObstaclesFix: React.FC = () => {
           <Mushroom
             position={[0, 0, 0.5]}
             rotation={[1.57, 0, 0]}
-            scale={[0.08, 0.08, 0.08]}
+            scale={[0.05, 0.05, 0.05]}
           />
         </mesh>
       ))}
